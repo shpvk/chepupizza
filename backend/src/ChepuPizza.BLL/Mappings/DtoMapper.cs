@@ -53,9 +53,10 @@ namespace ChepuPizza.BLL.Mappings
                     Quantity = orderItem.Quantity,
                     UnitPrice = orderItem.UnitPrice,
                     TotalPrice = orderItem.TotalPrice,
-                    Ingredients = orderItem.Ingredients
-                        .Select(ingredient => ingredient.ToResponse())
-                        .ToList()
+                    Ingredients = new List<IngredientResponse>()
+                    // Ingredients = orderItem.Ingredients
+                    //     .Select(ingredient => ingredient.ToResponse())
+                    //     .ToList()
                 }).ToList()
             };
         }

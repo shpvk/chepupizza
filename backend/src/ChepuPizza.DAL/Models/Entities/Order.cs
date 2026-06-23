@@ -79,7 +79,6 @@
             Quantity = quantity;
             UnitPrice = unitPrice;
             TotalPrice = unitPrice * quantity;
-            Ingredients = ingredients;
         }
 
         public int Id { get; private set; }
@@ -96,10 +95,6 @@
         public decimal UnitPrice { get; private set; }
 
         public decimal TotalPrice { get; private set; }
-
-        [System.ComponentModel.DataAnnotations.Schema.NotMapped]
-        public List<Ingredient> Ingredients { get; private set; } = new();
-
 
         public static (OrderItem? orderItem, string? error) Create(
             string pizzaName,
