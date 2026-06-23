@@ -16,6 +16,8 @@ import { CartProvider } from "./context/CartContext";
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Catalog from "./pages/catalog/catalog.jsx";
+import NotFound from "./pages/NotFound/NotFound";
+
 function App() {
   useEffect(() => {
     preloadIngredients().catch(() => {});
@@ -51,6 +53,7 @@ function App() {
                 </RequireAuth>
               }
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </CartProvider>
