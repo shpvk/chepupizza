@@ -1,4 +1,4 @@
-﻿using ChepuPizza.DAL.Data;
+using ChepuPizza.DAL.Data;
 using ChepuPizza.DAL.Interfaces;
 using ChepuPizza.DAL.Models.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +23,6 @@ namespace ChepuPizza.DAL.Repositories
                 .AsSplitQuery()
                 .ToListAsync();
 
-
             return pizzas;
         }
 
@@ -33,13 +32,9 @@ namespace ChepuPizza.DAL.Repositories
                 .AsNoTracking()
                 .Include(p => p.PizzaIngredients)
                     .ThenInclude(pi => pi.Ingredient)
-                .AsSplitQuery()
+                .AsSingleQuery()
                 .FirstOrDefaultAsync(p => p.Id == pizzaId);
 
-            if (pizza == null)
-            {
-                return null;
-            }
             return pizza;
         }
 

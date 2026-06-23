@@ -1,4 +1,4 @@
-﻿using ChepuPizza.DAL.Data;
+using ChepuPizza.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +12,13 @@ namespace ChepuPizza.DAL
             IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(
+                    configuration.GetConnectionString("DefaultConnection"),
+                    npgsqlOptions =>
+                    {
+                        npgsqlOptions.EnableRetryOnFailure(3);
+                        npgsqlOptions.CommandTimeout(60);
+                    }));
 
             return services;
         }
