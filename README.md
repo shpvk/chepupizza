@@ -4,9 +4,9 @@ ChepuPizza is a pizza ordering web application with ready-made pizzas, a custom 
 
 ## Live Demo
 
-Frontend: https://chepupizzeria.vercel.app/
-API: https://chepupizzeria.onrender.com
-Swagger: https://chepupizzeria.onrender.com/swagger
+* Frontend: https://chepupizzeria.vercel.app/
+* API: https://chepupizzeria.onrender.com
+* Swagger: https://chepupizzeria.onrender.com/swagger
 
 ## Tech Stack
 
