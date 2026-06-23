@@ -58,7 +58,13 @@ namespace ChepuPizza.BLL.Services
                 throw new ArgumentException(error);
             }
 
-            await _orderRepository.CreateAsync(order!);
+            Dictionary<int, int> pizzaOrderCounts = requestDto.Items
+                .Where(item => item.PizzaId.HasValue)
+                .GroupBy(item => item.PizzaId!.Value)
+                .ToDictionary(group => group.Key, group => group.Sum(item => item.Quantity));
+
+            await _orderRepository.CreateAsync(order!, pizzaOrderCounts);
+
             return order!.ToResponse();
         }
 
@@ -127,7 +133,6 @@ namespace ChepuPizza.BLL.Services
                 throw new ArgumentException(error);
             }
 
-            pizza.IncreaseOrderCount(itemDto.Quantity);
             return orderItem;
         }
 
