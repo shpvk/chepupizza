@@ -20,7 +20,7 @@ namespace ChepuPizza.DAL.Repositories
                 .AsNoTracking()
                 .Include(p => p.PizzaIngredients)
                     .ThenInclude(pi => pi.Ingredient)
-                 .AsSplitQuery()
+                .AsSplitQuery()
                 .ToListAsync();
 
 
@@ -30,9 +30,11 @@ namespace ChepuPizza.DAL.Repositories
         public async Task<Pizza?> GetByIdAsync(int pizzaId)
         {
             Pizza? pizza = await _context.Pizzas
+                .AsNoTracking()
                 .Include(p => p.PizzaIngredients)
                     .ThenInclude(pi => pi.Ingredient)
-                 .FirstOrDefaultAsync(p => p.Id == pizzaId);
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(p => p.Id == pizzaId);
 
             if (pizza == null)
             {
