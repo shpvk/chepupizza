@@ -8,7 +8,7 @@ import { calculatePromotionDiscount, findPromotionByCode } from '../../data/prom
 import './Cart.css'
 
 function formatPrice(price) {
-  return `${Math.round(Number(price) || 0)} грн`
+  return `${Math.round(Number(price) || 0)} UAH`
 }
 
 function getPizzaId(item) {
@@ -37,15 +37,11 @@ function EmptyCart() {
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
         </svg>
       </div>
-      <h2>Кошик порожній</h2>
-      <p>Додайте піцу з меню або створіть свою в конструкторі</p>
+      <h2>Your cart is empty</h2>
+      <p>Add a pizza from the catalog or build your own pizza in the constructor.</p>
       <div className="cart-empty__actions">
-        <Link to="/" className="cart-empty__btn cart-empty__btn--primary">
-          До меню
-        </Link>
-        <Link to="/constructor" className="cart-empty__btn cart-empty__btn--secondary">
-          Конструктор
-        </Link>
+        <Link to="/" className="cart-empty__btn cart-empty__btn--primary">Catalog</Link>
+        <Link to="/constructor" className="cart-empty__btn cart-empty__btn--secondary">Pizza builder</Link>
       </div>
     </div>
   )
@@ -73,43 +69,20 @@ function CartItem({ item, onIncrement, onDecrement, onRemove }) {
         <h3 className="cart-item__name">{item.name}</h3>
         {item.description && <p className="cart-item__desc">{item.description}</p>}
         {item.ingredients && item.ingredients.length > 0 && (
-          <p className="cart-item__ingredients">
-            {item.ingredients.join(', ')}
-          </p>
+          <p className="cart-item__ingredients">{item.ingredients.join(', ')}</p>
         )}
       </div>
 
       <div className="cart-item__controls">
         <div className="cart-item__counter">
-          <button
-            type="button"
-            onClick={() => onDecrement(item.id)}
-            aria-label="Зменшити кількість"
-            className="cart-item__counter-btn"
-          >
-            -
-          </button>
+          <button type="button" onClick={() => onDecrement(item.id)} aria-label="Decrease quantity" className="cart-item__counter-btn">-</button>
           <span className="cart-item__count">{item.quantity}</span>
-          <button
-            type="button"
-            onClick={() => onIncrement(item.id)}
-            aria-label="Збільшити кількість"
-            className="cart-item__counter-btn"
-          >
-            +
-          </button>
+          <button type="button" onClick={() => onIncrement(item.id)} aria-label="Increase quantity" className="cart-item__counter-btn">+</button>
         </div>
 
-        <strong className="cart-item__price">
-          {formatPrice(item.price * item.quantity)}
-        </strong>
+        <strong className="cart-item__price">{formatPrice(item.price * item.quantity)}</strong>
 
-        <button
-          type="button"
-          className="cart-item__remove"
-          onClick={() => onRemove(item.id)}
-          aria-label={`Видалити ${item.name}`}
-        >
+        <button type="button" className="cart-item__remove" onClick={() => onRemove(item.id)} aria-label={`Remove ${item.name}`}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="3 6 5 6 21 6" />
             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
@@ -142,7 +115,7 @@ function Cart() {
 
     if (!promotion) {
       setActivePromotion(null)
-      setPromoMessage('Промокод не знайдено.')
+      setPromoMessage('Promo code was not found.')
       return
     }
 
@@ -168,7 +141,7 @@ function Cart() {
     }
 
     event.preventDefault()
-    setCheckoutMessage(`Нельзя оформить заказ: "${localPizza.name}" локальная пицца без id на backend.`)
+    setCheckoutMessage(`Cannot place order: "${localPizza.name}" has no backend pizza id.`)
   }
 
   return (
@@ -177,102 +150,55 @@ function Cart() {
       <main className="cart" aria-labelledby="cart-title">
         <section className="cart__hero">
           <div>
-            <span className="cart__eyebrow">Ваше замовлення</span>
-            <h1 id="cart-title">Кошик</h1>
-            {totalItems > 0 && (
-              <p className="cart__subtitle">
-                {totalItems} {totalItems === 1 ? 'товар' : totalItems < 5 ? 'товари' : 'товарів'} у кошику
-              </p>
-            )}
+            <span className="cart__eyebrow">Your order</span>
+            <h1 id="cart-title">Cart</h1>
+            {totalItems > 0 && <p className="cart__subtitle">{totalItems} item{totalItems === 1 ? '' : 's'} in cart</p>}
           </div>
-          {totalItems > 0 && (
-            <button
-              type="button"
-              className="cart__clear"
-              onClick={clearCart}
-            >
-              Очистити кошик
-            </button>
-          )}
+          {totalItems > 0 && <button type="button" className="cart__clear" onClick={clearCart}>Clear cart</button>}
         </section>
 
         {items.length === 0 ? (
           <EmptyCart />
         ) : (
           <div className="cart__content">
-            <section className="cart__items" aria-label="Товари в кошику">
+            <section className="cart__items" aria-label="Cart items">
               {items.map((item) => (
-                <CartItem
-                  key={item.id}
-                  item={item}
-                  onIncrement={incrementItem}
-                  onDecrement={decrementItem}
-                  onRemove={removeItem}
-                />
+                <CartItem key={item.id} item={item} onIncrement={incrementItem} onDecrement={decrementItem} onRemove={removeItem} />
               ))}
             </section>
 
-            <aside className="cart__sidebar" aria-label="Підсумок замовлення">
+            <aside className="cart__sidebar" aria-label="Order summary">
               <div className="cart-summary">
-                <h2>Підсумок</h2>
+                <h2>Summary</h2>
 
                 <div className="cart-summary__rows">
+                  <div className="cart-summary__row"><span>Items ({totalItems})</span><strong>{formatPrice(totalPrice)}</strong></div>
                   <div className="cart-summary__row">
-                    <span>Товари ({totalItems})</span>
-                    <strong>{formatPrice(totalPrice)}</strong>
-                  </div>
-                  <div className="cart-summary__row">
-                    <span>Доставка</span>
-                    <strong className={deliveryPrice === 0 ? 'cart-summary__free' : ''}>
-                      {deliveryPrice === 0 ? 'Безкоштовно' : formatPrice(deliveryPrice)}
-                    </strong>
+                    <span>Delivery</span>
+                    <strong className={deliveryPrice === 0 ? 'cart-summary__free' : ''}>{deliveryPrice === 0 ? 'Free' : formatPrice(deliveryPrice)}</strong>
                   </div>
                   {activePromotion && (
                     <div className="cart-summary__row">
-                      <span>Промокод {activePromotion.code}</span>
-                      <strong className={discountAmount > 0 ? 'cart-summary__discount' : ''}>
-                        {discountAmount > 0 ? `-${formatPrice(discountAmount)}` : formatPrice(0)}
-                      </strong>
+                      <span>Promo {activePromotion.code}</span>
+                      <strong className={discountAmount > 0 ? 'cart-summary__discount' : ''}>{discountAmount > 0 ? `-${formatPrice(discountAmount)}` : formatPrice(0)}</strong>
                     </div>
                   )}
-                  {deliveryPrice > 0 && (
-                    <p className="cart-summary__hint">
-                      Безкоштовна доставка від 500 грн
-                    </p>
-                  )}
+                  {deliveryPrice > 0 && <p className="cart-summary__hint">Free delivery from 500 UAH</p>}
                 </div>
 
-                <div className="cart-summary__total">
-                  <span>Разом</span>
-                  <strong>{formatPrice(finalPrice)}</strong>
-                </div>
+                <div className="cart-summary__total"><span>Total</span><strong>{formatPrice(finalPrice)}</strong></div>
 
-                <Link
-                  to="/order"
-                  className="cart-summary__checkout"
-                  id="checkout-button"
-                  onClick={handleCheckout}
-                >
-                  Оформити замовлення
-                </Link>
-
-                {checkoutMessage && (
-                  <p className="cart-promo__message">
-                    {checkoutMessage}
-                  </p>
-                )}
-
-                <Link to="/" className="cart-summary__continue">
-                  Продовжити покупки
-                </Link>
+                <Link to="/order" className="cart-summary__checkout" id="checkout-button" onClick={handleCheckout}>Checkout</Link>
+                {checkoutMessage && <p className="cart-promo__message">{checkoutMessage}</p>}
+                <Link to="/" className="cart-summary__continue">Continue shopping</Link>
               </div>
 
               <div className="cart-promo">
-                <h3>Є промокод?</h3>
+                <h3>Have a promo code?</h3>
                 <div className="cart-promo__field">
                   <input
                     type="text"
-                    placeholder="Введіть промокод"
+                    placeholder="Enter promo code"
                     className="cart-promo__input"
                     id="promo-input"
                     value={promoCode}
@@ -287,19 +213,11 @@ function Cart() {
                       }
                     }}
                   />
-                  <button type="button" className="cart-promo__apply" id="promo-apply" onClick={handleApplyPromo}>
-                    Застосувати
-                  </button>
+                  <button type="button" className="cart-promo__apply" id="promo-apply" onClick={handleApplyPromo}>Apply</button>
                 </div>
-                {activePromotion && (
-                  <button type="button" className="cart-promo__remove" onClick={handleRemovePromo}>
-                    Скасувати {activePromotion.code}
-                  </button>
-                )}
+                {activePromotion && <button type="button" className="cart-promo__remove" onClick={handleRemovePromo}>Remove {activePromotion.code}</button>}
                 {(promoMessage || (activePromotion && promotionDiscount.message)) && (
-                  <p className={discountAmount > 0 ? 'cart-promo__message is-success' : 'cart-promo__message'}>
-                    {promoMessage || promotionDiscount.message}
-                  </p>
+                  <p className={discountAmount > 0 ? 'cart-promo__message is-success' : 'cart-promo__message'}>{promoMessage || promotionDiscount.message}</p>
                 )}
               </div>
             </aside>

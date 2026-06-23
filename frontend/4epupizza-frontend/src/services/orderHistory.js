@@ -35,7 +35,7 @@ export function saveOrderToHistory(user, order) {
   const nextOrder = {
     id: order.id || `local-${Date.now()}`,
     createdAt: order.createdAt || new Date().toISOString(),
-    status: order.status || 'Принято',
+    status: order.status || 'Accepted',
     ...order,
   }
 

@@ -7,12 +7,12 @@ import { getOrderHistory } from '../../services/orderHistory'
 import './Profile.css'
 
 function formatPrice(price) {
-  return `${Math.round(Number(price) || 0)} грн`
+  return `${Math.round(Number(price) || 0)} UAH`
 }
 
 function formatDate(value) {
   try {
-    return new Intl.DateTimeFormat('uk-UA', {
+    return new Intl.DateTimeFormat('en-US', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -20,7 +20,7 @@ function formatDate(value) {
       minute: '2-digit',
     }).format(new Date(value))
   } catch {
-    return 'Нещодавно'
+    return 'Recently'
   }
 }
 
@@ -32,31 +32,35 @@ function Profile() {
   const { user, logout } = useAuth()
   const orders = getOrderHistory(user)
   const totalSpent = orders.reduce((sum, order) => sum + (Number(order.totalPrice) || 0), 0)
-  
   const avatarKey = `avatar_${user?.username}`
   const [avatar, setAvatar] = useState(() => localStorage.getItem(avatarKey))
 
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        const result = reader.result
-        setAvatar(result)
-        localStorage.setItem(avatarKey, result)
-        window.dispatchEvent(new Event('avatar-updated'))
-      }
-      reader.readAsDataURL(file)
+  function handleAvatarChange(event) {
+    const file = event.target.files[0]
+
+    if (!file) {
+      return
     }
+
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      const result = reader.result
+      setAvatar(result)
+      localStorage.setItem(avatarKey, result)
+      window.dispatchEvent(new Event('avatar-updated'))
+    }
+    reader.readAsDataURL(file)
   }
 
   const favoriteItem = orders
     .flatMap((order) => order.items || [])
     .reduce((favorite, item) => {
       const quantity = Number(item.quantity) || 0
+
       if (!favorite || quantity > favorite.quantity) {
         return { name: item.name, quantity }
       }
+
       return favorite
     }, null)
 
@@ -66,85 +70,52 @@ function Profile() {
       <main className="profile" aria-labelledby="profile-title">
         <section className="profile-hero">
           <div className="profile-hero__identity">
-            <label htmlFor="avatar-upload" title="Змінити аватар" style={{ cursor: 'pointer' }}>
+            <label htmlFor="avatar-upload" title="Change avatar" style={{ cursor: 'pointer' }}>
               <div className="profile-avatar" aria-hidden="true" style={{ overflow: 'hidden' }}>
-                {avatar ? (
-                  <img src={avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                ) : (
-                  getInitial(user?.username)
-                )}
+                {avatar ? <img src={avatar} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : getInitial(user?.username)}
               </div>
             </label>
-            <input 
-              type="file" 
-              id="avatar-upload" 
-              accept="image/*" 
-              style={{ display: 'none' }} 
-              onChange={handleAvatarChange} 
-            />
+            <input type="file" id="avatar-upload" accept="image/*" style={{ display: 'none' }} onChange={handleAvatarChange} />
             <div>
-              <span className="profile-hero__eyebrow">Особистий кабінет</span>
+              <span className="profile-hero__eyebrow">Account</span>
               <h1 id="profile-title">{user?.username}</h1>
             </div>
           </div>
 
           <div className="profile-hero__actions">
-            <Link to="/" className="profile-action profile-action--primary">
-              До меню
-            </Link>
-            <button className="profile-action profile-action--ghost" type="button" onClick={logout}>
-              Вийти
-            </button>
+            <Link to="/" className="profile-action profile-action--primary">Catalog</Link>
+            <button className="profile-action profile-action--ghost" type="button" onClick={logout}>Log out</button>
           </div>
         </section>
 
-        <section className="profile-stats" aria-label="Статистика профілю">
-          <article className="profile-stat">
-            <span>Замовлень</span>
-            <strong>{orders.length}</strong>
-          </article>
-          <article className="profile-stat">
-            <span>Витрачено</span>
-            <strong>{formatPrice(totalSpent)}</strong>
-          </article>
-          {favoriteItem && (
-            <article className="profile-stat">
-              <span>Улюблене</span>
-              <strong>{favoriteItem.name}</strong>
-            </article>
-          )}
+        <section className="profile-stats" aria-label="Profile statistics">
+          <article className="profile-stat"><span>Orders</span><strong>{orders.length}</strong></article>
+          <article className="profile-stat"><span>Total spent</span><strong>{formatPrice(totalSpent)}</strong></article>
+          {favoriteItem && <article className="profile-stat"><span>Favorite</span><strong>{favoriteItem.name}</strong></article>}
         </section>
 
         <section className="profile-layout">
-          <aside className="profile-panel" aria-label="Дані профілю">
-            <h2>Ваш профіль</h2>
+          <aside className="profile-panel" aria-label="Profile details">
+            <h2>Your profile</h2>
             <div className="profile-info">
-              <div>
-                <span>Логін</span>
-                <strong>{user?.username}</strong>
-              </div>
-              <div>
-                <span>ID</span>
-                <strong>{user?.id || 'Локальний акаунт'}</strong>
-              </div>
+              <div><span>Username</span><strong>{user?.username}</strong></div>
+              <div><span>ID</span><strong>{user?.id || 'Local account'}</strong></div>
             </div>
           </aside>
 
           <section className="profile-history" aria-labelledby="history-title">
             <div className="profile-history__header">
               <div>
-                <span className="profile-history__eyebrow">Історія</span>
-                <h2 id="history-title">Ваші замовлення</h2>
+                <span className="profile-history__eyebrow">History</span>
+                <h2 id="history-title">Your orders</h2>
               </div>
             </div>
 
             {orders.length === 0 ? (
               <div className="profile-empty">
-                <h3>Замовлень ще немає</h3>
-                <p>Після оформлення покупки вона з'явиться тут із сумою, адресою та складом.</p>
-                <Link to="/" className="profile-empty__link">
-                  Обрати піцу
-                </Link>
+                <h3>No orders yet</h3>
+                <p>After checkout, your order will appear here with its total, address, and items.</p>
+                <Link to="/" className="profile-empty__link">Choose pizza</Link>
               </div>
             ) : (
               <div className="profile-orders">
@@ -152,7 +123,7 @@ function Profile() {
                   <article className="profile-order" key={order.id}>
                     <div className="profile-order__top">
                       <div>
-                        <span className="profile-order__number">Замовлення #{orders.length - index}</span>
+                        <span className="profile-order__number">Order #{orders.length - index}</span>
                         <h3>{formatDate(order.createdAt)}</h3>
                       </div>
                       <span className="profile-order__status">{order.status}</span>
@@ -167,9 +138,7 @@ function Profile() {
                       {(order.items || []).map((item) => (
                         <div className="profile-order-item" key={`${order.id}-${item.id}`}>
                           <span>{item.name}</span>
-                          <strong>
-                            {item.quantity} x {formatPrice(item.price)}
-                          </strong>
+                          <strong>{item.quantity} x {formatPrice(item.price)}</strong>
                         </div>
                       ))}
                     </div>

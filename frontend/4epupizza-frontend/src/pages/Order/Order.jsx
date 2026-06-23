@@ -12,7 +12,7 @@ import './Order.css'
 const ORDER_API_URL = buildApiUrl('/api/order')
 
 function formatPrice(price) {
-  return `${Math.round(Number(price) || 0)} грн`
+  return `${Math.round(Number(price) || 0)} UAH`
 }
 
 function getPizzaId(item) {
@@ -58,17 +58,10 @@ function buildOrderItems(items) {
     const quantity = Number(item.quantity) || 1
 
     if (String(item.id).startsWith('custom-pizza-')) {
-      return {
-        pizzaId: null,
-        ingredientIds,
-        quantity,
-      }
+      return { pizzaId: null, ingredientIds, quantity }
     }
 
-    const orderItem = {
-      pizzaId: getPizzaId(item),
-      quantity,
-    }
+    const orderItem = { pizzaId: getPizzaId(item), quantity }
 
     if (ingredientIds.length > 0) {
       orderItem.ingredientIds = ingredientIds
@@ -82,7 +75,7 @@ async function getOrderErrorMessage(response) {
   const text = await response.text()
 
   if (!text) {
-    return 'РќРµ РІРґР°Р»РѕСЃСЏ РѕС„РѕСЂРјРёС‚Рё Р·Р°РјРѕРІР»РµРЅРЅСЏ. РџРµСЂРµРІС–СЂС‚Рµ РґР°РЅС– С‚Р° СЃРїСЂРѕР±СѓР№С‚Рµ С‰Рµ СЂР°Р·.'
+    return 'Could not place the order. Check the details and try again.'
   }
 
   try {
@@ -118,14 +111,14 @@ function Order() {
     event.preventDefault()
 
     if (items.length === 0) {
-      setStatus({ type: 'error', message: 'Кошик порожній. Додайте піцу перед оформленням.' })
+      setStatus({ type: 'error', message: 'Your cart is empty. Add a pizza before checkout.' })
       return
     }
 
     const localPizza = items.find(isLocalPizza)
 
     if (localPizza) {
-      setStatus({ type: 'error', message: `Нельзя оформить заказ: "${localPizza.name}" локальная пицца без id на backend.` })
+      setStatus({ type: 'error', message: `Cannot place order: "${localPizza.name}" has no backend pizza id.` })
       return
     }
 
@@ -135,10 +128,7 @@ function Order() {
     try {
       const response = await fetch(ORDER_API_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          accept: 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json', accept: 'application/json' },
         body: JSON.stringify({
           customerName: form.customerName.trim(),
           phone: form.phone.trim(),
@@ -173,18 +163,10 @@ function Order() {
         totalPrice: finalPrice,
       })
       clearCart()
-      setStatus({ type: 'success', message: 'Замовлення прийнято. Дякуємо!' })
+      setStatus({ type: 'success', message: 'Order accepted. Thank you!' })
       setTimeout(() => navigate('/profile'), 1500)
     } catch (error) {
-      if (error.message) {
-        setStatus({ type: 'error', message: error.message })
-        return
-      }
-
-      setStatus({
-        type: 'error',
-        message: 'Не вдалося оформити замовлення. Перевірте дані та спробуйте ще раз.',
-      })
+      setStatus({ type: 'error', message: error.message || 'Could not place the order. Check the details and try again.' })
     } finally {
       setIsSubmitting(false)
     }
@@ -196,116 +178,45 @@ function Order() {
       <main className="order" aria-labelledby="order-title">
         <section className="order__hero">
           <div>
-            <span className="order__eyebrow">Доставка 4epupizza</span>
-            <h1 id="order-title">Оформлення замовлення</h1>
-            <p>Залиште контакти, адресу та коментар для кур'єра.</p>
+            <span className="order__eyebrow">ChepuPizza delivery</span>
+            <h1 id="order-title">Checkout</h1>
+            <p>Leave your contact details, address, and a courier note.</p>
           </div>
-          <Link to="/cart" className="order__back">
-            До кошика
-          </Link>
+          <Link to="/cart" className="order__back">Back to cart</Link>
         </section>
 
         <div className="order__layout">
           <form className="order-form" onSubmit={handleSubmit}>
-            <label className="order-field">
-              <span>Ім'я</span>
-              <input
-                type="text"
-                name="customerName"
-                value={form.customerName}
-                onChange={updateField}
-                autoComplete="name"
-                placeholder="Олександр"
-                required
-              />
-            </label>
+            <label className="order-field"><span>Name</span><input type="text" name="customerName" value={form.customerName} onChange={updateField} autoComplete="name" placeholder="Alex" required /></label>
+            <label className="order-field"><span>Phone</span><input type="tel" name="phone" value={form.phone} onChange={updateField} autoComplete="tel" inputMode="tel" placeholder="+380 99 123 45 67" required /></label>
+            <label className="order-field"><span>Address</span><input type="text" name="address" value={form.address} onChange={updateField} autoComplete="street-address" placeholder="Odesa, Deribasivska St, 12" required /></label>
+            <label className="order-field"><span>Comment</span><textarea name="comment" value={form.comment} onChange={updateField} placeholder="Entrance, floor, door code, or order notes" rows="5" /></label>
 
-            <label className="order-field">
-              <span>Телефон</span>
-              <input
-                type="tel"
-                name="phone"
-                value={form.phone}
-                onChange={updateField}
-                autoComplete="tel"
-                inputMode="tel"
-                placeholder="+380 99 123 45 67"
-                required
-              />
-            </label>
+            {status.message && <p className={`order-status order-status--${status.type}`} role="status">{status.message}</p>}
 
-            <label className="order-field">
-              <span>Адреса</span>
-              <input
-                type="text"
-                name="address"
-                value={form.address}
-                onChange={updateField}
-                autoComplete="street-address"
-                placeholder="Одеса, вул. Дерибасівська, 12"
-                required
-              />
-            </label>
-
-            <label className="order-field">
-              <span>Коментар</span>
-              <textarea
-                name="comment"
-                value={form.comment}
-                onChange={updateField}
-                placeholder="Під'їзд, поверх, домофон або побажання до замовлення"
-                rows="5"
-              />
-            </label>
-
-            {status.message && (
-              <p className={`order-status order-status--${status.type}`} role="status">
-                {status.message}
-              </p>
-            )}
-
-            <button className="order-form__submit" type="submit" disabled={isSubmitting || items.length === 0}>
-              {isSubmitting ? 'Оформлюємо...' : 'Підтвердити замовлення'}
-            </button>
+            <button className="order-form__submit" type="submit" disabled={isSubmitting || items.length === 0}>{isSubmitting ? 'Placing order...' : 'Confirm order'}</button>
           </form>
 
-          <aside className="order-summary" aria-label="Підсумок замовлення">
-            <h2>Ваше замовлення</h2>
+          <aside className="order-summary" aria-label="Order summary">
+            <h2>Your order</h2>
 
             {items.length === 0 ? (
-              <div className="order-summary__empty">
-                <p>Кошик порожній.</p>
-                <Link to="/">До меню</Link>
-              </div>
+              <div className="order-summary__empty"><p>Your cart is empty.</p><Link to="/">Go to catalog</Link></div>
             ) : (
               <div className="order-summary__items">
                 {items.map((item) => (
                   <article className="order-summary__item" key={item.id}>
-                    <div>
-                      <h3>{item.name}</h3>
-                      {item.description && <p>{item.description}</p>}
-                    </div>
-                    <strong>
-                      {item.quantity} × {formatPrice(item.price)}
-                    </strong>
+                    <div><h3>{item.name}</h3>{item.description && <p>{item.description}</p>}</div>
+                    <strong>{item.quantity} x {formatPrice(item.price)}</strong>
                   </article>
                 ))}
               </div>
             )}
 
             <div className="order-summary__rows">
-              <div>
-                <span>Товари ({totalItems})</span>
-                <strong>{formatPrice(totalPrice)}</strong>
-              </div>
-              <div>
-                <span>Доставка</span>
-                <strong>{deliveryPrice === 0 ? 'Безкоштовно' : formatPrice(deliveryPrice)}</strong>
-              </div>
-              <div className="order-summary__total">
-                <span>Разом</span>
-                <strong>{formatPrice(finalPrice)}</strong>
-              </div>
+              <div><span>Items ({totalItems})</span><strong>{formatPrice(totalPrice)}</strong></div>
+              <div><span>Delivery</span><strong>{deliveryPrice === 0 ? 'Free' : formatPrice(deliveryPrice)}</strong></div>
+              <div className="order-summary__total"><span>Total</span><strong>{formatPrice(finalPrice)}</strong></div>
             </div>
           </aside>
         </div>
