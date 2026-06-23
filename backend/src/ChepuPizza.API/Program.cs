@@ -25,7 +25,7 @@ namespace ChepuPizza.API
                 options.AddPolicy("Frontend", policy =>
                 {
                     policy.WithOrigins(
-                        "https://chepupizza.vercel.app"
+                        "https://chepupizza.vercel.app",
                         "http://localhost:5173"
                     )
                     .AllowAnyHeader()
