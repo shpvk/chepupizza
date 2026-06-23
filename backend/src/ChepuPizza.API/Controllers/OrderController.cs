@@ -10,10 +10,12 @@ namespace ChepuPizza.API.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
+        private readonly ILogger<OrderController> _logger;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService, ILogger<OrderController> logger)
         {
             _orderService = orderService;
+            _logger = logger;
         }
 
 
@@ -28,6 +30,11 @@ namespace ChepuPizza.API.Controllers
             catch (ArgumentException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, "Failed to create order");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to create order");
             }
         }
     }
