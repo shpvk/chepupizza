@@ -25,6 +25,7 @@ namespace ChepuPizza.API
                 options.AddPolicy("Frontend", policy =>
                 {
                     policy.WithOrigins(
+                        "https://chepupizzeria.vercel.app",
                         "https://chepupizza.vercel.app",
                         "http://localhost:5173"
                     )
@@ -32,6 +33,8 @@ namespace ChepuPizza.API
                     .AllowAnyMethod();
                 });
             });
+
+            builder.Services.AddMemoryCache();
 
             var app = builder.Build();
 
