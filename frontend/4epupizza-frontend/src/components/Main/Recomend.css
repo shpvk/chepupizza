@@ -101,6 +101,15 @@
   width: 100%;
 }
 
+.rec-status {
+  width: 100%;
+  margin-top: 90px;
+  color: #ffffff;
+  font-family: Muller;
+  font-size: 24px;
+  text-align: center;
+}
+
 .moore-btn
 {
     width: 100%;

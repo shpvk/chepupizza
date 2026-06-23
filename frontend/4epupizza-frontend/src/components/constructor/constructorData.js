@@ -1,35 +1,40 @@
 import { buildApiUrl } from '../../services/apiConfig'
 
 export const INGREDIENTS_API_URL = buildApiUrl('/api/ingredients')
-export const BASE_PIZZA_PRICE = 149
+export const BASE_PIZZA_PRICE = 100
 export const READY_PIZZA_IMAGE_URL = 'https://zcncvckglgttnjwrwuuc.supabase.co/storage/v1/object/public/pizza-images/pizzas/readyPizza.png'
 
 export const categoryLabels = {
-  Cheese: 'Сири',
-  Sausage: 'Ковбаси',
-  Mushroom: 'Гриби',
-  Sauce: 'Соуси',
+  Cheese: 'Cheese',
+  Sausage: 'Sausage',
+  Mushroom: 'Mushrooms',
+  Mushrooms: 'Mushrooms',
+  Sauce: 'Sauces',
+  Sauces: 'Sauces',
 }
 
 export const categoryDescriptions = {
-  Cheese: 'Моцарела та чедер',
-  Sausage: 'Пепероні, салямі та шинка',
-  Mushroom: 'Різні види грибів',
-  Sauce: 'Томатний та BBQ соус',
+  Cheese: 'Mozzarella, cheddar, and other cheeses',
+  Sausage: 'Pepperoni, salami, ham, and meat toppings',
+  Mushroom: 'Fresh mushroom varieties',
+  Mushrooms: 'Fresh mushroom varieties',
+  Sauce: 'Tomato, BBQ, and signature sauces',
+  Sauces: 'Tomato, BBQ, and signature sauces',
 }
 
-export const categoryOrder = ['Cheese', 'Sausage', 'Mushroom', 'Sauce']
+export const categoryOrder = ['Cheese', 'Sausage', 'Mushroom', 'Mushrooms', 'Sauce', 'Sauces']
 
 export function normalizeIngredient(ingredient) {
-  const category = String(ingredient.category || '').trim()
+  const category = ingredient.category || ingredient.categoryName || 'Other'
 
   return {
-    id: String(ingredient.id),
-    label: ingredient.name || 'Ingredient',
-    price: Math.round(Number(ingredient.price) || 0),
-    imageUrl: ingredient.imageUrl || '',
+    ...ingredient,
+    id: ingredient.id,
+    label: ingredient.label || ingredient.name || 'Ingredient',
+    price: Number(ingredient.price) || 0,
+    imageUrl: ingredient.imageUrl || ingredient.imageURL || ingredient.image || '',
     category,
     categoryKey: category,
-    categoryLabel: categoryLabels[category] || category,
+    isAvailable: ingredient.isAvailable !== false,
   }
 }

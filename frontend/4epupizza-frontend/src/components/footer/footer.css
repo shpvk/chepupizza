@@ -154,12 +154,12 @@
     display: flex;
     flex-direction: column;
     
-    /* Добавляем саму полоску */
-    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Полупрозрачная белая линия */
     
-    /* Добавляем отступы */
-    margin-top: 30px; /* Отступ от элементов выше (соцсетей) */
-    padding-top: 20px; /* Отступ от самой линии до контента внутри under-footer */
+    border-top: 1px solid rgba(255, 255, 255, 0.1); 
+    
+    
+    margin-top: 30px; 
+    padding-top: 20px; 
 }
 .under-footer-cont
 {

@@ -70,7 +70,7 @@ export function useIngredients() {
       } catch (error) {
         if (error.name !== 'AbortError' && isMounted) {
           setIngredients([])
-          setLoadError('Не вдалося завантажити інгредієнти з API.')
+          setLoadError('Could not load ingredients from API.')
         }
       } finally {
         if (!controller.signal.aborted && isMounted) {

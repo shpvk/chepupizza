@@ -24,87 +24,13 @@ function Header() {
 
   return (
     <header className="header">
-      <div className="header_logo">
-        <div className="logo-wrapper">
-          <Link to="/">
-            <img
-              src="https://zcncvckglgttnjwrwuuc.supabase.co/storage/v1/object/public/pizza-images/important/logo.png"
-              alt="Logo"
-            />
-          </Link>
-        </div>
-      </div>
-      <div className="nav_bar">
-        <nav>
-          <ul>
-            <li>
-              <Link to="/catalog">Каталог</Link>
-            </li>
-            <li>
-              <Link to="/constructor">Конструктор</Link>
-            </li>
-            <li>
-              <Link to="/promotions">Акции</Link>
-            </li>
-            <li>
-              <Link to="/about">Про нас</Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
-
+      <div className="header_logo"><div className="logo-wrapper"><Link to="/"><img src="https://zcncvckglgttnjwrwuuc.supabase.co/storage/v1/object/public/pizza-images/important/logo.png" alt="4epupizza" /></Link></div></div>
+      <div className="nav_bar"><nav><ul><li><Link to="/catalog">Catalog</Link></li><li><Link to="/constructor">Builder</Link></li><li><Link to="/promotions">Deals</Link></li><li><Link to="/about">About</Link></li></ul></nav></div>
       <div className="header_actions">
-        {isAuthenticated ? (
-          <div className="header-user">
-            <Link
-              to="/profile"
-              className="header-user__profile"
-              aria-label="Відкрити профіль"
-            >
-              <span
-                className="header-user__avatar"
-                aria-hidden="true"
-                style={{ overflow: "hidden" }}
-              >
-                {avatar ? (
-                  <img
-                    src={avatar}
-                    alt="Avatar"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                ) : (
-                  userInitial
-                )}
-              </span>
-              <span className="header-user__name">{user.username}</span>
-            </Link>
-            <button className="btn--logout" type="button" onClick={logout}>
-              Вийти
-            </button>
-          </div>
-        ) : (
-          <Link to="/login" className="btn--login">
-            Увійти
-          </Link>
-        )}
-        <Link to="/cart" className="btn--cart" id="header-cart-button">
-          <img
-            src="https://zcncvckglgttnjwrwuuc.supabase.co/storage/v1/object/public/pizza-images/important/cart.png"
-            alt="Кошик"
-          />
-          {totalItems > 0 && (
-            <span className="cart-badge">
-              {totalItems > 99 ? "99+" : totalItems}
-            </span>
-          )}
-        </Link>
+        {isAuthenticated ? <div className="header-user"><Link to="/profile" className="header-user__profile" aria-label="Open profile"><span className="header-user__avatar" aria-hidden="true" style={{ overflow: "hidden" }}>{avatar ? <img src={avatar} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : userInitial}</span><span className="header-user__name">{user.username}</span></Link><button className="btn--logout" type="button" onClick={logout}>Log out</button></div> : <Link to="/login" className="btn--login">Sign in</Link>}
+        <Link to="/cart" className="btn--cart" id="header-cart-button"><img src="https://zcncvckglgttnjwrwuuc.supabase.co/storage/v1/object/public/pizza-images/important/cart.png" alt="Cart" />{totalItems > 0 && <span className="cart-badge">{totalItems > 99 ? "99+" : totalItems}</span>}</Link>
       </div>
     </header>
   );
 }
-
 export default Header;
