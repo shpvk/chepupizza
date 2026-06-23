@@ -1,0 +1,365 @@
+@font-face {
+  font-family: 'Muller';
+  src: url('/fonts/MullerRegular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Muller';
+  src: url('/fonts/MullerMedium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Muller';
+  src: url('/fonts/MullerExtraBold.ttf') format('truetype');
+  font-weight: 800; 
+  font-style: normal;
+}
+.main-cont
+{
+    width: 80%;
+    /* Адаптивный отступ: минимум 20px, в идеале 10% от экрана, максимум 240px */
+    margin: 0 0 0 clamp(20px, 10vw, 240px);
+    height: auto;
+    display: flex;
+    flex-direction: row;
+}
+.pizza-background
+{
+  font-family: "Alex Brush", cursive;
+  font-weight: 400;
+  font-style: normal;
+  position: absolute;
+  font-size: 16rem;
+  color: transparent; 
+  -webkit-text-stroke: 1.5px rgb(94, 36, 0); 
+  user-select: none;
+  margin: 180px 0px  0px 25%;
+  z-index: -1
+}
+
+.text-section
+{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-top: 120px;
+    
+}
+.text-section h1
+{
+ font-family: Muller;
+font-weight: 800;
+font-style: ExtraBold;
+/* Шрифт сам уменьшается на маленьких экранах */
+font-size: clamp(36px, 5vw, 69.17px);
+line-height: 110.00000000000001%;
+letter-spacing: 0%;
+color: white;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #ff5d29, #fe9c1c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.text-section p
+{
+  margin-top: clamp(15px, 3vw, 30px);
+font-family: Muller;
+font-weight: 400;
+font-style: Regular;
+font-size: clamp(14px, 2vw, 19.56px);
+line-height: 151%;
+letter-spacing: 0%;
+color: #A3A3A3;
+}
+.subtitle {
+  color: white;
+  font-weight: 500;
+  margin-top: 15px;
+}
+
+.photo-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 50%;
+  position: relative;
+}
+
+.photo-wrapper {
+  position: relative;
+  width: 60%;
+  max-width: 520px;
+  margin-top: 60px;
+  align-self: flex-start;
+}
+
+.photo-wrapper img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 46px;
+  object-fit: cover;
+  display: block;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.badge {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 16px;
+  border-radius: 20px;
+  color: white;
+  font-family: Muller;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  z-index: 2;
+  white-space: nowrap;
+}
+
+.badge-left {
+  top: 10%;
+  left: -15%;
+  animation: float 4s ease-in-out infinite;
+}
+
+.badge-right {
+  bottom: 15%;
+  right: -10%;
+  animation: float 4s ease-in-out infinite reverse;
+}
+
+.freepizz {
+  font-family: Muller;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 19.56px;
+  line-height: 151%;
+  color: white;
+}
+
+.video-preview
+{
+  position: relative;
+  width: 270px;
+  height: 180px;
+  margin-top: 12px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  display: block;
+}
+.play-button
+{
+  position: absolute;
+  width: 100px;
+  height: 100px;;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.fade-in-scale {
+  animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+.vide-player
+{
+  position: fixed;
+  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  top: 0;
+  left: 0;       
+  width: 100vw;    
+  height: 100vh;    
+  z-index: 1000;
+}
+.video-content
+{
+  width: 50%;
+  position: relative;
+}
+.close-button
+{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: flex-end;
+  
+
+}
+.close-button button
+{
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-right: 10px;
+}
+.close-button button img
+{
+  width: 35px;
+  height: 35px;
+}
+.catalog-button
+{
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 16px 32px;
+  background: linear-gradient(261.69deg, #ff5d29 12.12%, #fe9c1c 86.72%);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-decoration: none;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(255, 93, 41, 0.28);
+  transition: all 0.3s ease;
+}
+
+.catalog-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(255, 93, 41, 0.38);
+}
+
+.catalog-button:active {
+  transform: translateY(0);
+}
+/* ===== Адаптив ===== */
+@media (max-width: 1200px) {
+  .main-cont {
+    width: 90%;
+    margin: 0 auto;
+    padding: 0;
+  }
+  .pizza-background {
+    font-size: clamp(8rem, 12vw, 12rem);
+    margin: 140px 0 0 10%;
+  }
+}
+
+@media (max-width: 900px) {
+  .main-cont {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .text-section {
+    width: 100%;
+    max-width: 600px;
+    align-items: center;
+    text-align: center;
+    margin-top: 60px;
+  }
+  
+  .text-section p {
+    text-align: center;
+  }
+  
+  .photo-section {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+  }
+  
+  .photo-section img {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto 0;
+    align-self: center;
+  }
+  
+  .video-preview {
+    margin: 20px auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .text-section {
+    margin-top: 40px;
+  }
+  
+  .text-section h1 {
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
+  }
+  
+  .text-section p br {
+    display: none; /* Убираем переносы строк на мобилках */
+  }
+  
+  .text-section p,
+  .freepizz {
+    font-size: 1rem;
+  }
+  
+  .pizza-background {
+    font-size: 5rem;
+    margin-top: 80px;
+    margin-left: 5%;
+  }
+  
+  .video-preview {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+  
+  .video-content {
+    width: 95%;
+  }
+  
+  .play-button {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .catalog-button {
+    width: 100%;
+    text-align: center;
+    padding: 16px 0;
+    margin-top: 1.5rem;
+  }
+}

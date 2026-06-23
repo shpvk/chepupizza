@@ -1,0 +1,239 @@
+@font-face {
+  font-family: 'Muller';
+  src: url('/fonts/MullerRegular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Muller';
+  src: url('/fonts/MullerMedium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Muller';
+  src: url('/fonts/MullerExtraBold.ttf') format('truetype');
+  font-weight: 800; 
+  font-style: normal;
+}
+
+.footer {
+    width: 100%;
+    padding: 34px 40px;
+    box-sizing: border-box;
+    background-color: #120905;
+    font-family: Muller, Arial, sans-serif;
+    margin-top: auto;
+}
+
+.footer-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-logo {
+    width: 140px;
+    height: 38px;
+    flex: 0 0 auto;
+}
+
+.footer-logo a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.footer-logo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: left center;
+}
+
+.footer-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+}
+
+.footer-nav a {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 14px;
+    line-height: 1.35;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-nav a:hover {
+    color: #ff8a00;
+}
+
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto 0;
+}
+.footer-brother {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.footer-brother img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+.footer-brother a {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.footer-brother a:hover {
+    color: #ff8a00;
+}
+.footer-phone {
+    color: #ff8a00;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.footer-phone a {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.footer-phone a:hover {
+    opacity: 0.8;
+}
+
+.footer-socials {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-socials a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    transition: transform 0.3s ease;
+}
+
+.footer-socials a:hover {
+    transform: translateY(-3px);
+}
+
+.footer-socials img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    display: block;
+}
+.under-footer {
+     width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    
+    /* Добавляем саму полоску */
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Полупрозрачная белая линия */
+    
+    /* Добавляем отступы */
+    margin-top: 30px; /* Отступ от элементов выше (соцсетей) */
+    padding-top: 20px; /* Отступ от самой линии до контента внутри under-footer */
+}
+.under-footer-cont
+{
+    width: 70%;
+    margin: 0 auto;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.footer-copy
+{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1;
+}
+.footer-copy p 
+{
+    font-family: Muller;
+font-weight: 400;
+font-style: Regular;
+font-size: 17.88px;
+color: rgb(162, 162, 162);
+line-height: 110.00000000000001%;
+letter-spacing: 0%;
+
+}
+.footer-logos
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 16px;
+}
+.footer-logos img
+{
+    width: 60px;
+    height: 20px;
+}
+.footer-third
+{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+}
+.footer-third p
+{
+font-family: Muller;
+font-weight: 400;
+font-style: Regular;
+font-size: 17.88px;
+color: rgb(162, 162, 162);
+line-height: 110.00000000000001%;
+letter-spacing: 0%;
+}
+@media (max-width: 680px) {
+    .footer {
+        padding: 30px 20px;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-nav {
+        justify-content: center;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+}

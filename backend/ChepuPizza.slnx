@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="ChepuPizza.API/ChepuPizza.API.csproj" />
+  <Project Path="ChepuPizza.BLL/ChepuPizza.BLL.csproj" />
+  <Project Path="ChepuPizza.DAL/ChepuPizza.DAL.csproj" />
+</Solution>

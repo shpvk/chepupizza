@@ -1,0 +1,175 @@
+@font-face {
+  font-family: 'Muller';
+  src: url('/fonts/MullerRegular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Muller';
+  src: url('/fonts/MullerMedium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Muller';
+  src: url('/fonts/MullerExtraBold.ttf') format('truetype');
+  font-weight: 800; 
+  font-style: normal;
+}
+.aboutus-dark-section {
+
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #d1d1d1;
+  min-height: 600px;
+}
+
+.aboutus-watermark {
+  font-family: "Alex Brush", cursive;
+  font-weight: 400;
+  font-style: normal;
+  position: absolute;
+  font-size: 16rem;
+  color: transparent; 
+  -webkit-text-stroke: 1.5px rgb(94, 36, 0); 
+  user-select: none;
+  margin: 180px 0px  0px 5%;
+  z-index: -1
+}
+
+.aboutus-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+/* Левая часть с текстом */
+.aboutus-left {
+  flex: 1;
+  max-width: 500px;
+}
+
+.aboutus-heading {
+  font-family: Muller, sans-serif;
+  font-weight: 800;
+  font-size: 4rem;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.aboutus-paragraph {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #a09d9c;
+  margin-bottom: 2rem;
+}
+
+/* Кластер пицц слева */
+.aboutus-pizza-cluster {
+  display: flex;
+  position: relative;
+  height: 120px;
+  margin-bottom: 2rem;
+  margin-left: 2rem;
+}
+
+.cluster-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute;
+  border: 3px solid #1a0b08;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.img-1 { left: 0; z-index: 3; transform: scale(1.1); }
+.img-2 { left: 60px; z-index: 2; }
+.img-3 { left: 120px; z-index: 1; transform: scale(0.9); }
+
+/* Центральная стрелка */
+.aboutus-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+}
+
+.dashed-arrow {
+  width: 100px;
+  height: 50px;
+  opacity: 0.5;
+}
+
+/* Правая часть с большой пиццей */
+.aboutus-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.large-board-wrapper {
+  width: 450px;
+  height: 550px;
+  background-color: #111;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+}
+
+.large-pizza-board {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Плавающие элементы (картошка фри и кусок пиццы) */
+.floating-fries {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  font-size: 4rem;
+  transform: translateX(-50%) rotate(-15deg);
+  z-index: 5;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+}
+
+.floating-slice {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  font-size: 5rem;
+  transform: rotate(15deg);
+  z-index: 5;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+}
+
+/* Адаптив */
+@media (max-width: 992px) {
+  .aboutus-container {
+    flex-direction: column;
+  }
+  .aboutus-center {
+    transform: rotate(90deg);
+    margin: 2rem 0;
+  }
+  .aboutus-right {
+    justify-content: center;
+  }
+  .large-board-wrapper {
+    width: 100%;
+    max-width: 450px;
+    height: 400px;
+  }
+}

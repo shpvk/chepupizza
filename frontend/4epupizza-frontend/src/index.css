@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar {
+  width: 10px; /* Ширина вертикального скролла */
+  height: 10px; /* Высота горизонтального скролла */
+}
+
+::-webkit-scrollbar-track {
+  background: #180a00; /* Цвет фона трека (дорожки) */
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ff5d29 0%, #fe9c1c 100%); /* Градиентный ползунок */
+  border-radius: 10px; /* Закругления */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #fe9c1c 0%, #ff5d29 100%); /* Цвет при наведении */
+}

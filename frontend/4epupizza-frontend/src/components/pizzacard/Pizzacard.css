@@ -1,0 +1,211 @@
+@font-face {
+    font-family: 'Muller';
+    src: url('/fonts/MullerRegular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Muller';
+    src: url('/fonts/MullerMedium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Muller';
+    src: url('/fonts/MullerExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+.cart-cont
+{
+    width: 300px;
+    height: auto;
+    background: rgba(33, 10, 1, 1);
+    border-radius: 30px;
+    border: 1px solid rgba(75, 21, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+    gap: 20px;
+    padding: 0 20px 24px 20px;
+}
+.pizza-image-container
+{
+ 
+    margin-top: -80px;
+}
+.pizza-image {
+  width: 190px;
+  height: 190px;
+  object-fit: contain;
+}
+.pizza-title {
+    font-family: Muller;
+font-weight: 500;
+font-style: Medium;
+font-size: 25.1px;
+color: white;
+line-height: 110.00000000000001%;
+letter-spacing: 0%;
+
+}
+.pizza-ingredients {
+  font-family: Muller;
+font-weight: 400;
+font-style: Regular;
+font-size: 14.32px;
+color: white;
+line-height: 110.00000000000001%;
+letter-spacing: 0%;
+
+}
+.pizza-sizes {
+  display: flex;
+  gap: 12px; 
+  /* margin: 20px 0 20px 0; */
+}
+.size-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25); 
+  color: #ffffff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; 
+  cursor: pointer;
+  font-family: 'Muller', sans-serif;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.size-btn.active {
+  background: #FF5924;
+  border-color: #FF5924;
+  color: #ffffff;
+}
+
+
+.ingredients-btn
+{
+  border: 1.5px solid #FF5924;
+  background: transparent;
+  border-radius: 30px;
+  padding: 10px 50px;
+  font-family: Muller;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 16.08px;
+  background: linear-gradient(261.69deg, #FF5924 12.12%, #FFA229 86.72%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* color: transparent; — альтернативный вариант */
+
+  line-height: 110.00000000000001%;
+  letter-spacing: 0%;
+  
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.ingredients-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 10px rgba(255, 89, 36, 0.2);
+}
+
+.ingredients-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 5px rgba(255, 89, 36, 0.2);
+}
+
+.pizza-footer
+{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 40px;
+}
+.counter-value
+{
+  font-family: Muller;
+font-weight: 400;
+font-style: Regular;
+font-size: 22.82px;
+color: rgba(163, 163, 163, 1);
+user-select: none;
+line-height: 110.00000000000001%;
+letter-spacing: 0%;
+}
+.counter-btn
+{
+  border: 1px solid rgba(163, 163, 163, 1);
+  background: transparent;
+  border-radius: 20px;
+  width: 28px;        
+  height: 28px;
+  color:rgba(163, 163, 163, 1);
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+.counter-btn:active {
+  transform: scale(0.85);
+}
+
+.pizza-counter
+{
+  display: flex;
+  align-items: center; 
+  gap: 12px; 
+}
+.pizza-price
+{
+  font-family: Muller;
+font-weight: 500;
+font-style: Medium;
+font-size: 25.46px;
+color:white;
+line-height: 110.00000000000001%;
+letter-spacing: 0%;
+
+}
+.counter-btn.plus {
+  background: #FF5924;     
+  border-color: transparent;      
+  color: #ffffff;                 
+}
+
+.order-btn
+{
+  background: linear-gradient(261.69deg, #FF5924 12.12%, #FFA229 86.72%);
+  border: none;
+  border-radius: 84px;
+  width:195px;
+  height:45px;
+  font-family: Muller;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 17.45px;
+  color:white;
+  line-height: 110.00000000000001%;
+  letter-spacing: 0%;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.order-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 10px rgba(255, 89, 36, 0.4);
+}
+
+.order-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 5px rgba(255, 89, 36, 0.4);
+}
